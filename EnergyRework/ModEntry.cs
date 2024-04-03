@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewModdingAPI.Utilities;
 using StardewValley;
 
 namespace EnergyRework
@@ -14,44 +10,18 @@ namespace EnergyRework
 	{
 		private readonly Dictionary<string, float> Parameters = new()
 		{
-			{"BaseEnergyLoss", 1f},
+			{"BaseEnergyLoss", -1f},
 			{"EnergyFloor", 0f},
-			{"MovingEnergyOffset", 2f}
+			{"MovingEnergyOffset", -2f},
+			{"SittingEnergyOffset", 1f}
 		};
 		public override void Entry(IModHelper helper)
 		{
 			helper.Events.GameLoop.TimeChanged += this.TimeChanged;
 		}
 
-		private void ReduceEnergy(float energyLoss)
+		private float GetEnergyLoss()
 		{
-			float currentStamina = Game1.player.Stamina;
-
-			if (currentStamina <= this.Parameters["EnergyFloor"])
-			{
-				return;
-			}
-
-			Game1.player.Stamina = Math.Max(this.Parameters["EnergyFloor"], currentStamina - energyLoss);
-		}
-
-		private void TimeChanged(object? sender, TimeChangedEventArgs e)
-		{
-			if (!Context.IsWorldReady)
-			{
-				return;
-			}
-
-			if (!Context.IsPlayerFree)
-			{
-				return;
-			}
-
-			if (Game1.paused)
-			{
-				return;
-			}
-
 			float energyLoss = this.Parameters["BaseEnergyLoss"];
 
 			if (Game1.player.running && Game1.player.isMoving())
@@ -59,7 +29,43 @@ namespace EnergyRework
 				energyLoss += this.Parameters["MovingEnergyOffset"];
 			}
 
-			this.ReduceEnergy(energyLoss);
+			return energyLoss;
+		}
+
+		private bool IsGameStateViable()
+		{
+			if (!Context.IsPlayerFree)
+			{
+				return false;
+			}
+
+			if (Game1.isFestival())
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		private void ChangeEnergy(float energyChange)
+		{
+			Game1.player.Stamina = Math.Clamp(Game1.player.Stamina + energyChange, this.Parameters["EnergyFloor"], (float)Game1.player.MaxStamina);
+		}
+
+		private void TimeChanged(object? sender, TimeChangedEventArgs e)
+		{
+			if (!IsGameStateViable())
+			{
+				return;
+			}
+
+			if (Game1.player.IsSitting())
+			{
+				this.ChangeEnergy(this.Parameters["SittingEnergyOffset"]);
+				return;
+			}
+
+			this.ChangeEnergy(this.GetEnergyLoss());
 		}
 	}
 }
