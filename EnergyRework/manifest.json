@@ -1,0 +1,10 @@
+{
+  "Name": "EnergyRework",
+  "Author": "seferoni",
+  "Version": "1.0.0",
+  "Description": "PLC",
+  "UniqueID": "seferoni.EnergyRework",
+  "EntryDll": "EnergyRework.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}

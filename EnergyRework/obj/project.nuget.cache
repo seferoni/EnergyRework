@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GzflIeMrcRuDlz3CAZkRZCJ0sPNBYcOgc9HwkZ2P4ZMH0en/S2Cm3OTtD1FVNM54X/tUiUpJLw6AOElKndyXEw==",
+  "success": true,
+  "projectFilePath": "D:\\sdv modding playground\\repos\\EnergyRework\\EnergyRework\\EnergyRework.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KZMN\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.1.1\\pathoschild.stardew.modbuildconfig.4.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}
