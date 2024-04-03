@@ -10,10 +10,10 @@ namespace EnergyRework
 	{
 		private readonly Dictionary<string, float> Parameters = new()
 		{
-			{"BaseEnergyLoss", -1f},
+			{"BaseEnergyLoss", -2f},
 			{"EnergyFloor", 0f},
-			{"MovingEnergyOffset", -2f},
-			{"SittingEnergyOffset", 1f}
+			{"MovingEnergyOffset", -3f},
+			{"SittingEnergyOffset", 3f}
 		};
 		public override void Entry(IModHelper helper)
 		{
