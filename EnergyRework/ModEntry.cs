@@ -1,32 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 
 namespace EnergyRework
-{	// TODO: absolutely needs to scale with maximum energy. figure this out
+{
 	internal sealed class ModEntry : Mod
 	{
-		private readonly Dictionary<string, float> Parameters = new()
-		{
-			{"BaseEnergyLoss", -2f},
-			{"EnergyFloor", 15f},
-			{"MovingEnergyOffset", -3f},
-			{"SittingEnergyOffset", 3f}
-		};
+		private ModConfig Config;
 		public override void Entry(IModHelper helper)
 		{
+			this.Config = this.Helper.ReadConfig<ModConfig>();
 			helper.Events.GameLoop.TimeChanged += this.TimeChanged;
 		}
 
 		private float GetEnergyLoss()
 		{
-			float energyLoss = this.Parameters["BaseEnergyLoss"];
+			float energyLoss = this.Config.BaseEnergyLoss;
 
 			if (Game1.player.running && Game1.player.isMoving())
 			{
-				energyLoss += this.Parameters["MovingEnergyOffset"];
+				energyLoss += this.Config.MovingEnergyOffset;
 			}
 
 			return energyLoss;
@@ -54,23 +48,23 @@ namespace EnergyRework
 
 		private void ChangeEnergy(float energyChange)
 		{
-			Game1.player.Stamina = Math.Clamp(Game1.player.Stamina + energyChange, this.Parameters["EnergyFloor"], (float)Game1.player.MaxStamina);
+			Game1.player.Stamina = Math.Clamp(Game1.player.Stamina + energyChange, this.Config.EnergyFloor, (float)Game1.player.MaxStamina);
 		}
 
 		private void TimeChanged(object? sender, TimeChangedEventArgs e)
 		{
-			if (!IsGameStateViable())
+			if (!this.IsGameStateViable())
 			{
 				return;
 			}
 
 			if (Game1.player.IsSitting())
 			{
-				this.ChangeEnergy(this.Parameters["SittingEnergyOffset"]);
+				this.ChangeEnergy(this.Config.SittingEnergyOffset);
 				return;
 			}
 
-			if (Game1.player.Stamina <= this.Parameters["EnergyFloor"])
+			if (Game1.player.Stamina <= this.Config.EnergyFloor)
 			{
 				return;
 			}
