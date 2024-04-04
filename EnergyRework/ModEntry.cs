@@ -5,13 +5,13 @@ using StardewModdingAPI.Events;
 using StardewValley;
 
 namespace EnergyRework
-{
+{	// TODO: absolutely needs to scale with maximum energy. figure this out
 	internal sealed class ModEntry : Mod
 	{
 		private readonly Dictionary<string, float> Parameters = new()
 		{
 			{"BaseEnergyLoss", -2f},
-			{"EnergyFloor", 0f},
+			{"EnergyFloor", 15f},
 			{"MovingEnergyOffset", -3f},
 			{"SittingEnergyOffset", 3f}
 		};
@@ -44,6 +44,11 @@ namespace EnergyRework
 				return false;
 			}
 
+			if (Game1.player.swimming.Value)
+			{
+				return false;
+			}
+
 			return true;
 		}
 
@@ -62,6 +67,11 @@ namespace EnergyRework
 			if (Game1.player.IsSitting())
 			{
 				this.ChangeEnergy(this.Parameters["SittingEnergyOffset"]);
+				return;
+			}
+
+			if (Game1.player.Stamina <= this.Parameters["EnergyFloor"])
+			{
 				return;
 			}
 

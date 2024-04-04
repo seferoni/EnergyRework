@@ -2,9 +2,9 @@
   "Name": "EnergyRework",
   "Author": "seferoni",
   "Version": "1.0.0",
-  "Description": "PLC",
+  "Description": "A lightweight, minimally invasive rework of the energy mechanic.",
   "UniqueID": "seferoni.EnergyRework",
   "EntryDll": "EnergyRework.dll",
   "MinimumApiVersion": "4.0.0",
-  "UpdateKeys": []
+  "UpdateKeys": [ "Nexus:21686" ]
 }
