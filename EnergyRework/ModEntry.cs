@@ -7,7 +7,7 @@ namespace EnergyRework
 {
 	internal sealed class ModEntry : Mod
 	{
-		private ModConfig Config;
+		internal ModConfig Config { get; set; } = null!;
 		public override void Entry(IModHelper helper)
 		{
 			this.Config = this.Helper.ReadConfig<ModConfig>();

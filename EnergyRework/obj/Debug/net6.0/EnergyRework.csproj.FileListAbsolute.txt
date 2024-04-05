@@ -1,8 +1,0 @@
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\bin\Debug\net6.0\EnergyRework.deps.json
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\bin\Debug\net6.0\EnergyRework.dll
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.csproj.AssemblyReference.cache
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.GeneratedMSBuildEditorConfig.editorconfig
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.AssemblyInfoInputs.cache
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.AssemblyInfo.cs
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.csproj.CoreCompileInputs.cache
-D:\sdv modding playground\repos\EnergyRework\EnergyRework\obj\Debug\net6.0\EnergyRework.dll

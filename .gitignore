@@ -1,3 +1,7 @@
-
 *.v2
 *.vsidx
+*.suo
+*.v5.2
+/.vs
+/EnergyRework/bin
+/EnergyRework/obj
