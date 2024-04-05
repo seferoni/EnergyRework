@@ -1,75 +1,40 @@
-﻿using System;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewValley;
+using EnergyRework.Common;
+using EnergyRework.Interfaces;
 
 namespace EnergyRework
 {
 	internal sealed class ModEntry : Mod
 	{
-		internal ModConfig Config { get; set; } = null!;
-		public override void Entry(IModHelper helper)
+		internal static ModConfig Config { get; set; } = null!;
+        public override void Entry(IModHelper helper)
 		{
-			this.Config = this.Helper.ReadConfig<ModConfig>();
-			helper.Events.GameLoop.TimeChanged += this.TimeChanged;
+			Config = Helper.ReadConfig<ModConfig>();
+			helper.Events.GameLoop.TimeChanged += TimeChanged;
+            helper.Events.GameLoop.GameLaunched += GameLaunched;
+        }
+
+		private void GameLaunched(object? sender, GameLaunchedEventArgs e)
+		{
+			SetupConfig();
 		}
 
-		private float GetEnergyLoss()
-		{
-			float energyLoss = this.Config.BaseEnergyLoss;
+		private void SetupConfig()
+		{	// TODO: need to register number settings
+            var GMCMAPI = Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
 
-			if (Game1.player.running && Game1.player.isMoving())
+            if (GMCMAPI is null)
 			{
-				energyLoss += this.Config.MovingEnergyOffset;
-			}
+                return;
+            }
 
-			return energyLoss;
-		}
-
-		private bool IsGameStateViable()
-		{
-			if (!Context.IsPlayerFree)
-			{
-				return false;
-			}
-
-			if (Game1.isFestival())
-			{
-				return false;
-			}
-
-			if (Game1.player.swimming.Value)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		private void ChangeEnergy(float energyChange)
-		{
-			Game1.player.Stamina = Math.Clamp(Game1.player.Stamina + energyChange, this.Config.EnergyFloor, (float)Game1.player.MaxStamina);
-		}
+			GMCMAPI.Register(ModManifest, () => Config = new(), () => Helper.WriteConfig(Config));
+        }
 
 		private void TimeChanged(object? sender, TimeChangedEventArgs e)
 		{
-			if (!this.IsGameStateViable())
-			{
-				return;
-			}
-
-			if (Game1.player.IsSitting())
-			{
-				this.ChangeEnergy(this.Config.SittingEnergyOffset);
-				return;
-			}
-
-			if (Game1.player.Stamina <= this.Config.EnergyFloor)
-			{
-				return;
-			}
-
-			this.ChangeEnergy(this.GetEnergyLoss());
+			Utilities.UpdateEnergy();
 		}
-	}
+    }
 }
