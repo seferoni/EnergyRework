@@ -25,7 +25,7 @@ namespace EnergyRework.Common
 
         internal static float GetMaximumEnergy()
         {
-            return Math.Min((float)Game1.player.MaxStamina, ModEntry.Config.SittingEnergyCeiling);
+            return Math.Min(Game1.player.MaxStamina, ModEntry.Config.SittingEnergyCeiling);
         }
 
         internal static bool IsGameStateViable()
