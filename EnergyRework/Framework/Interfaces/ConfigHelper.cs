@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using StardewModdingAPI;
 
 namespace EnergyRework.Interfaces
@@ -13,33 +10,37 @@ namespace EnergyRework.Interfaces
 		internal IGenericModConfigMenuApi API { get; set; }
 		internal IManifest Mod { get; set; }
 		internal ITranslationHelper TranslationHelper { get; set; }
+		internal ModConfig Config { get; set; }
 
-		internal ConfigHelper(IGenericModConfigMenuApi apiInstance, IManifest modManifest, ITranslationHelper translationHelperInstance)
+		internal ConfigHelper(IGenericModConfigMenuApi apiInstance, IManifest modManifest, ITranslationHelper translationHelperInstance, ModConfig config)
 		{
 			API = apiInstance;
 			Mod = modManifest;
 			TranslationHelper = translationHelperInstance;
+			Config = config;
 		}
 
-		internal void AddSimplifiedNumberSetting(string key, Func<float> getter, Action<float> setter, float min, float max, float interval)
-		{	// TODO
+		internal void AddSetting(string key, Expression<Func<float>> getter, float min = -15f, float max = 0f, float interval = 1f)
+		{
+			Func<float> newGetter = getter.Compile()!;
+			Action<float> newSetter = GetSetterFromGetter(getter);
+
 			API.AddNumberOption(
 				mod: Mod,
 				name: () => TranslationHelper.Get(key),
-				getValue: getter,
-				setValue: setter,
+				getValue: newGetter,
+				setValue: newSetter,
 				min: min,
 				max: max,
 				interval: interval
 			);
 		}
 
-		private static Expression<Action<T>> CreateSetter<T>(Expression<Func<T>> getter)
+		internal Action<T> GetSetterFromGetter<T>(Expression<Func<T>> getter)
 		{
-			var parameter = Expression.Parameter(typeof(T), "value");
-			var body = Expression.Assign(getter.Body, parameter);
-			var setter = Expression.Lambda<Action<T>>(body, parameter);
-			return setter;
+			var property = (PropertyInfo)((MemberExpression)getter.Body).Member;
+			var action = (T value) => property.SetValue(Config, value);
+			return action;
 		}
-    }
+	}
 }

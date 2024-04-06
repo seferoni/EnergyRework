@@ -1,3 +1,8 @@
 {
-  
+	"settings_page_title": "Parameters",
+	"base_energy_loss_setting": "Base Energy Loss",
+	"energy_floor_setting": "Energy Loss Floor",
+	"moving_energy_offset_setting": "Moving Energy Loss",
+	"sitting_energy_offset_setting": "Sitting Energy Gain",
+	"sitting_energy_ceiling_setting": "Sitting Energy Gain Ceiling"
 }

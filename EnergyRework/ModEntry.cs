@@ -29,6 +29,8 @@ namespace EnergyRework
 				return;
 			}
 
+			ConfigHelper configHelper = new(api, ModManifest, Helper.Translation, Config);
+
 			api.Register(
 				mod: ModManifest, 
 				reset: () => Config = new(), 
@@ -40,54 +42,11 @@ namespace EnergyRework
 				text: () => Helper.Translation.Get("settings_page_title")
 			);
 
-			api.AddNumberOption(
-				mod: ModManifest,
-				name: () => Helper.Translation.Get("base_energy_loss_setting"),
-				getValue: () => Config.BaseEnergyLoss,
-				setValue: (value) => Config.BaseEnergyLoss = value,
-				min: 0f,
-				interval: 1f
-			);
-
-			api.AddNumberOption(
-				mod: ModManifest,
-				name: () => Helper.Translation.Get("energy_floor_setting"),
-				getValue: () => Config.EnergyFloor,
-				setValue: (value) => Config.EnergyFloor = value,
-				min: 0f,
-				max: 30f,
-				interval: 2f
-			);
-
-			api.AddNumberOption(
-				mod: ModManifest,
-				name: () => Helper.Translation.Get("moving_energy_offset_setting"),
-				getValue: () => Config.MovingEnergyOffset,
-				setValue: (value) => Config.MovingEnergyOffset = value,
-				min: -10f,
-				max: 0f,
-				interval: 1f
-			);
-
-			api.AddNumberOption(
-				mod: ModManifest,
-				name: () => Helper.Translation.Get("sitting_energy_offset_setting"),
-				getValue: () => Config.SittingEnergyOffset,
-				setValue: (value) => Config.SittingEnergyOffset = value,
-				min: 0f,
-				max: 30f,
-				interval: 2f
-			);
-
-			api.AddNumberOption(
-				mod: ModManifest,
-				name: () => Helper.Translation.Get("sitting_energy_ceiling_setting"),
-				getValue: () => Config.SittingEnergyCeiling,
-				setValue: (value) => Config.SittingEnergyCeiling = value,
-				min: 50f,
-				max: 140f,
-				interval: 5f
-			);
+			configHelper.AddSetting("base_energy_loss_setting", () => Config.BaseEnergyLoss);
+			configHelper.AddSetting("energy_floor_setting", () => Config.EnergyFloor, min: 5f, max: 40f);
+			configHelper.AddSetting("moving_energy_offset_setting", () => Config.MovingEnergyOffset);
+			configHelper.AddSetting("sitting_energy_offset_setting", () => Config.SittingEnergyOffset, min: 0f, max: 15f);
+			configHelper.AddSetting("sitting_energy_ceiling_setting", () => Config.SittingEnergyCeiling, min: 45f, max: 200f, interval: 5f);
 		}
 
 		private void TimeChanged(object? sender, TimeChangedEventArgs e)
