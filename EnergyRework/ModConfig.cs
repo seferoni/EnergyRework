@@ -7,5 +7,5 @@
 		public float MovingEnergyOffset { get; set; } = -3f;
 		public float SittingEnergyOffset { get; set; } = 3f;
 		public float SittingEnergyCeiling { get; set; } = 140f;
-    }
+	}
 }
