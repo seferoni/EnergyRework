@@ -39,14 +39,14 @@ namespace EnergyRework
 
 			api.AddSectionTitle(
 				mod: ModManifest, 
-				text: () => Helper.Translation.Get("settings_page_title")
+				text: () => Helper.Translation.Get("title")
 			);
 
-			configHelper.AddSetting("base_energy_loss_setting", () => Config.BaseEnergyLoss);
-			configHelper.AddSetting("energy_floor_setting", () => Config.EnergyFloor, min: 5f, max: 40f);
-			configHelper.AddSetting("moving_energy_offset_setting", () => Config.MovingEnergyOffset);
-			configHelper.AddSetting("sitting_energy_offset_setting", () => Config.SittingEnergyOffset, min: 0f, max: 15f);
-			configHelper.AddSetting("sitting_energy_ceiling_setting", () => Config.SittingEnergyCeiling, min: 45f, max: 200f, interval: 5f);
+			configHelper.AddSetting("base_energy_loss", () => Config.BaseEnergyLoss);
+			configHelper.AddSetting("energy_floor", () => Config.EnergyFloor, min: 5f, max: 40f);
+			configHelper.AddSetting("moving_energy_offset", () => Config.MovingEnergyOffset);
+			configHelper.AddSetting("sitting_energy_offset", () => Config.SittingEnergyOffset, min: 0f, max: 15f);
+			configHelper.AddSetting("sitting_energy_ceiling", () => Config.SittingEnergyCeiling, min: 45f, max: 200f, interval: 5f);
 		}
 
 		private void TimeChanged(object? sender, TimeChangedEventArgs e)

@@ -28,6 +28,7 @@ namespace EnergyRework.Interfaces
 			API.AddNumberOption(
 				mod: Mod,
 				name: () => TranslationHelper.Get(key),
+				tooltip: () => TranslationHelper.Get(string.Concat(key, ".tooltip")),
 				getValue: newGetter,
 				setValue: newSetter,
 				min: min,

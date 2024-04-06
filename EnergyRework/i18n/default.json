@@ -1,8 +1,20 @@
 {
-	"settings_page_title": "Parameters",
-	"base_energy_loss_setting": "Base Energy Loss",
-	"energy_floor_setting": "Energy Loss Floor",
-	"moving_energy_offset_setting": "Moving Energy Loss",
-	"sitting_energy_offset_setting": "Sitting Energy Gain",
-	"sitting_energy_ceiling_setting": "Sitting Energy Gain Ceiling"
+
+	"title": "Parameters",
+
+	"base_energy_loss": "Base Energy Loss",
+	"base_energy_loss.tooltip":  "The base amount of energy deducted every ten minutes.",
+
+	"energy_floor": "Energy Loss Floor",
+	"energy_floor.tooltip":  "The maximum energy at which Energy Rework's energy loss no longer occurs.",
+
+	"moving_energy_offset": "Moving Energy Loss",
+	"moving_energy_offset.tooltip":  "The amount of additional energy lost when running.",
+
+	"sitting_energy_offset": "Sitting Energy Gain",
+	"sitting_energy_offset.tooltip":  "The amount of energy gained every ten minutes while seated.",
+
+	"sitting_energy_ceiling": "Sitting Energy Gain Ceiling",
+	"sitting_energy_ceiling.tooltip":  "The maximum energy at which Energy Rework's sitting energy gain no longer occurs."
+
 }

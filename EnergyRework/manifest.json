@@ -1,7 +1,7 @@
 {
-  "Name": "EnergyRework",
+  "Name": "Energy Rework",
   "Author": "seferoni",
-  "Version": "1.0.0",
+  "Version": "1.1.0",
   "Description": "A lightweight, minimally invasive rework of the energy mechanic.",
   "UniqueID": "seferoni.EnergyRework",
   "EntryDll": "EnergyRework.dll",
