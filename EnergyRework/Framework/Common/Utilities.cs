@@ -1,77 +1,78 @@
-﻿using StardewModdingAPI;
+﻿namespace EnergyRework.Common;
+
+#region using directives
+
 using StardewValley;
-using System;
 
-namespace EnergyRework.Common
+#endregion
+
+internal static class Utilities
 {
-	internal sealed class Utilities
+	internal static float GetEnergyLoss()
 	{
-		internal static float GetEnergyLoss()
+		float energyLoss = ModEntry.Config.BaseEnergyLoss;
+
+		if (Game1.player.running && Game1.player.isMoving())
 		{
-			float energyLoss = ModEntry.Config.BaseEnergyLoss;
-
-			if (Game1.player.running && Game1.player.isMoving())
-			{
-				energyLoss += ModEntry.Config.MovingEnergyOffset;
-			}
-
-			return energyLoss;
+			energyLoss += ModEntry.Config.MovingEnergyOffset;
 		}
 
-		internal static float GetMaximumEnergy()
+		return energyLoss;
+	}
+
+	internal static float GetMaximumEnergy()
+	{
+		return Math.Min(Game1.player.MaxStamina, ModEntry.Config.SittingEnergyCeiling);
+	}
+
+	internal static void IncreaseEnergy(float energyChange)
+	{
+		if (Game1.player.Stamina >= ModEntry.Config.SittingEnergyCeiling)
 		{
-			return Math.Min(Game1.player.MaxStamina, ModEntry.Config.SittingEnergyCeiling);
+			return;
 		}
 
-		internal static void IncreaseEnergy(float energyChange)
-		{
-			if (Game1.player.Stamina >= ModEntry.Config.SittingEnergyCeiling)
-			{
-				return;
-			}
+		Game1.player.Stamina = Math.Min(Game1.player.Stamina + energyChange, GetMaximumEnergy());
+	}
 
-			Game1.player.Stamina = Math.Min(Game1.player.Stamina + energyChange, GetMaximumEnergy());
+	internal static bool IsGameStateViable()
+	{
+		if (!Context.IsPlayerFree)
+		{
+			return false;
 		}
 
-		internal static bool IsGameStateViable()
+		if (Game1.player.swimming.Value)
 		{
-			if (!Context.IsPlayerFree)
-			{
-				return false;
-			}
-
-			if (Game1.player.swimming.Value)
-			{
-				return false;
-			}
-
-			return true;
+			return false;
 		}
 
-		internal static void ReduceEnergy(float energyChange)
-		{
-			if (Game1.player.Stamina <= ModEntry.Config.EnergyFloor)
-			{
-				return;
-			}
+		return true;
+	}
 
-			Game1.player.Stamina = Math.Clamp(Game1.player.Stamina + energyChange, ModEntry.Config.EnergyFloor, Game1.player.MaxStamina);
+	internal static void ReduceEnergy(float energyChange)
+	{
+		if (Game1.player.Stamina <= ModEntry.Config.EnergyFloor)
+		{
+			return;
 		}
 
-		internal static void UpdateEnergy()
+		Game1.player.Stamina = Math.Clamp(Game1.player.Stamina - energyChange, ModEntry.Config.EnergyFloor, Game1.player.MaxStamina);
+	}
+
+	internal static void UpdateEnergy()
+	{
+		if (!IsGameStateViable())
 		{
-			if (!IsGameStateViable())
-			{
-				return;
-			}
-
-			if (Game1.player.IsSitting())
-			{
-				IncreaseEnergy(ModEntry.Config.SittingEnergyOffset);
-				return;
-			}
-
-			ReduceEnergy(GetEnergyLoss());
+			return;
 		}
+
+		if (Game1.player.IsSitting())
+		{
+			IncreaseEnergy(ModEntry.Config.SittingEnergyOffset);
+			return;
+		}
+
+		ReduceEnergy(GetEnergyLoss());
 	}
 }

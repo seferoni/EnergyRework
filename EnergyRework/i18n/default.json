@@ -1,20 +1,20 @@
 {
 
-	"title": "Parameters",
+	"Title": "Parameters",
 
-	"base_energy_loss": "Base Energy Loss",
-	"base_energy_loss.tooltip":  "The base amount of energy deducted every ten minutes.",
+	"BaseEnergyLoss": "Base Energy Loss",
+	"BaseEnergyLoss.Tooltip": "The base amount of energy deducted every ten minutes.",
 
-	"energy_floor": "Energy Loss Floor",
-	"energy_floor.tooltip":  "The maximum energy at which Energy Rework's energy loss no longer occurs.",
+	"EnergyFloor": "Energy Loss Floor",
+	"EnergyFloor.Tooltip": "The maximum energy at which Energy Rework's energy loss no longer occurs.",
 
-	"moving_energy_offset": "Moving Energy Loss",
-	"moving_energy_offset.tooltip":  "The amount of additional energy lost when running.",
+	"MovingEnergyOffset": "Moving Energy Loss",
+	"MovingEnergyOffset.Tooltip": "The amount of additional energy lost when running.",
 
-	"sitting_energy_offset": "Sitting Energy Gain",
-	"sitting_energy_offset.tooltip":  "The amount of energy gained every ten minutes while seated.",
+	"SittingEnergyOffset": "Sitting Energy Gain",
+	"SittingEnergyOffset.Tooltip": "The amount of energy gained every ten minutes while seated.",
 
-	"sitting_energy_ceiling": "Sitting Energy Gain Ceiling",
-	"sitting_energy_ceiling.tooltip":  "The maximum energy at which Energy Rework's sitting energy gain no longer occurs."
+	"SittingEnergyCeiling": "Sitting Energy Gain Ceiling",
+	"SittingEnergyCeiling.Tooltip": "The maximum energy at which Energy Rework's sitting energy gain no longer occurs."
 
 }
